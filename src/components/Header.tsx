@@ -1,124 +1,175 @@
 "use client"
 
-import React from 'react'
-import Link from 'next/link'
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import * as React from "react"
+import Link from "next/link"
+import { ChevronDown, Menu } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
-import ModeToggle from './Mode-toggle'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import ModeToggle from "./Mode-toggle"
 
-// Navigation Link component
-const NavLink = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ href, children, ...props }, ref) => {
+export default function Component() {
   return (
-    <Link href={href ?? '/'} passHref legacyBehavior>
-      <NavigationMenuLink ref={ref} className={navigationMenuTriggerStyle()} {...(props as React.ComponentPropsWithoutRef<typeof NavigationMenuLink>)}>
-        {children}
-      </NavigationMenuLink>
-    </Link>
-  )
-})
-NavLink.displayName = "NavLink"
-
-// Header component
-const Header = () => {
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          
-          {/* Logo */}
-          <Link href="/" className="text-lg font-semibold hover:text-primary transition-colors">
-            Your Logo
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            <NavigationMenu>
-              <NavigationMenuList className="flex gap-4 text-sm">
-                <NavigationMenuItem>
-                  <NavLink href="/about">About</NavLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavLink href="/features">Features</NavLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavLink href="/pricing">Pricing</NavLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavLink href="/blog">Blog</NavLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-
-          {/* Right Section with Mode Toggle and Buttons */}
-          <div className="flex items-center gap-4">
-            <ModeToggle />
-
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/login">
-                <Button variant="ghost" size="sm" className="hover:text-primary transition-colors">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/register">
-                <Button size="sm" className="bg-primary text-white hover:bg-primary-dark transition-colors">
-                  Get Started
-                </Button>
-              </Link>
+    <div className="w-full p-4">
+      <header className="mx-auto max-w-7xl">
+        <div className="rounded-full bg-black px-4 py-2.5 shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-6 w-6 text-white"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              </svg>
+              <span className="text-xl font-semibold text-white">GigFinance</span>
             </div>
 
-            {/* Mobile Menu */}
-            <Sheet>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="sm" className="-mr-2">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle Menu</span>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex md:items-center md:space-x-6">
+              <Link
+                href="#"
+                className="text-sm font-medium text-white hover:text-white/80"
+              >
+                Dashboard
+              </Link>
+              <div className="relative group">
+                <button className="flex items-center text-sm font-medium text-white hover:text-white/80">
+                  Income Tools
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
+                  <div className="rounded-lg bg-white p-2 shadow-lg">
+                    <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Income Tracker
+                    </Link>
+                    <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Payment History
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="#"
+                className="text-sm font-medium text-white hover:text-white/80"
+              >
+                Expenses
+              </Link>
+              <div className="relative group">
+                <button className="flex items-center text-sm font-medium text-white hover:text-white/80">
+                  Resources
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
+                  <div className="rounded-lg bg-white p-2 shadow-lg">
+                    <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Help Center
+                    </Link>
+                    <Link href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Documentation
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            <div className="flex items-center space-x-3">
+              <ModeToggle />
+              {/* Desktop Auth Buttons - Hidden on Mobile */}
+              <div className="hidden md:flex md:items-center md:space-x-3">
+                <Button
+                  variant="ghost"
+                  className="text-sm font-medium text-white hover:text-white/80"
+                >
+                  Sign in
                 </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[250px] sm:w-[300px]">
-                <nav className="flex flex-col gap-4 p-4">
-                  <Link href="/" className="text-lg font-semibold mb-2 hover:text-primary transition-colors">Your Logo</Link>
-                  <div className="flex flex-col gap-3 mt-4 text-sm">
-                    <Link href="/about" className="hover:text-primary transition-colors">About</Link>
-                    <Link href="/features" className="hover:text-primary transition-colors">Features</Link>
-                    <Link href="/pricing" className="hover:text-primary transition-colors">Pricing</Link>
-                    <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
-                  </div>
-                  <div className="flex flex-col gap-2 mt-4">
-                    <Link href="/login">
-                      <Button variant="ghost" className="w-full justify-start hover:text-primary transition-colors">
-                        Sign In
-                      </Button>
+                <Button className="bg-white text-sm font-medium text-black hover:bg-white/90">
+                  Sign up for free
+                </Button>
+              </div>
+              {/* Mobile Menu Button */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="px-0 text-white hover:bg-transparent hover:text-white/80 md:hidden"
+                  >
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Toggle Menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                  <nav className="flex flex-col space-y-4">
+                    <Link
+                      href="#"
+                      className="text-lg font-medium hover:text-gray-600"
+                    >
+                      Dashboard
                     </Link>
-                    <Link href="/register">
-                      <Button className="w-full justify-start bg-primary text-white hover:bg-primary-dark transition-colors">
-                        Get Started
-                      </Button>
+                    <Collapsible>
+                      <CollapsibleTrigger className="flex w-full items-center justify-between text-lg font-medium hover:text-gray-600">
+                        Income Tools
+                        <ChevronDown className="h-4 w-4" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                        <Link href="#" className="block text-sm hover:text-gray-600">
+                          Income Tracker
+                        </Link>
+                        <Link href="#" className="block text-sm hover:text-gray-600">
+                          Payment History
+                        </Link>
+                      </CollapsibleContent>
+                    </Collapsible>
+                    <Link
+                      href="#"
+                      className="text-lg font-medium hover:text-gray-600"
+                    >
+                      Expenses
                     </Link>
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
+                    <Collapsible>
+                      <CollapsibleTrigger className="flex w-full items-center justify-between text-lg font-medium hover:text-gray-600">
+                        Resources
+                        <ChevronDown className="h-4 w-4" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                        <Link href="#" className="block text-sm hover:text-gray-600">
+                          Help Center
+                        </Link>
+                        <Link href="#" className="block text-sm hover:text-gray-600">
+                          Documentation
+                        </Link>
+                      </CollapsibleContent>
+                    </Collapsible>
+                    {/* Mobile Auth Buttons */}
+                    <div className="space-y-3 pt-4">
+                      <Button variant="outline" className="w-full justify-start">
+                        Sign in
+                      </Button>
+                      <Button className="w-full justify-start bg-black text-white hover:bg-black/90">
+                        Sign up for free
+                      </Button>
+                    </div>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   )
 }
-
-export default Header
